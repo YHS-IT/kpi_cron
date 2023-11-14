@@ -1,0 +1,29 @@
+
+> cron@0.0.1 start:dev
+> nest start --watch .
+
+c[[90m오후 5:27:13[0m] Starting compilation in watch mode...
+
+[[90m오후 5:27:16[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+Ignoring invalid timezone passed to Connection: Asia/Seoul. This is currently a warning, but in future versions of MySQL2, an error will be thrown if you pass an invalid configuration option to a Connection
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +52ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDiscoveryModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWinstonModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduleModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+{
+  type: 'query',
+  prefix: 'query:',
+  message: 'SELECT VERSION() AS `version`',
+  format: 'sql',
+  parameters: undefined
+}
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +61ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCronModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 34355  - [39m2023. 11. 14. 오후 5:27:17 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +15ms[39m
+open PORT : 8000

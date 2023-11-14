@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  #Google cloud sql connect image
+  #  prd-barofactory:asia-northeast3:cycledata 
+  cloudsql-proxy:
+    container_name: cloudsql-proxy
+    image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.5.0
+    command: centered-sight-237801:asia-northeast1:cycledata --credentials-file=/secret/credentials.json --address 0.0.0.0 --port 3306
+    ports:
+      - 127.0.0.1:3307:3306
+    volumes:
+      - ./secret/YHSBearing-1a8ccc994179.json:/secret/credentials.json
+    restart: always
+  
+  app:
+    build:
+      context: .
+      # 작업소스 도커파일
+      dockerfile: ./Dockerfile
+    depends_on: 
+      - cloudsql-proxy
+    ports:
+      - "8000:8000"
+    volumes: 
+      - ./:/var/www
