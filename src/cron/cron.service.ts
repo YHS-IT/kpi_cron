@@ -20,42 +20,88 @@ import { GlobalStore } from "src/lib/store";
 	 
 		@Cron(CronExpression.EVERY_10_SECONDS)
 		async testCron(){
+			for(let info of apiKey){
+				const {id,key}  = info;
+				// this.levelOne(key,id);
+				this.levelTwo(key,id);
+			}
+		}
+
+		@Cron('0 30 0 * * *')
+		async kpiService(){
 			// this.levelOne();
 		}
 
-		@Cron('0 30 00 * * *')
-		async kpiService(){
-			this.levelOne();
-		}
-
-		async levelOne(){
+		async levelOne(key:string,id:number){
 			let date = DateTimeUtil.now();
-			for(let info of apiKey){
-				const {id,key}  = info;
-				let data =  {
-					"KPILEVEL1":[{
-						kpiCertKey:key,
-						ocrDttm:DateTimeUtil.toString(DateTimeUtil.minusDate(date,1)),
-						systmOprYn:"Y",
-						trsDttm:DateTimeUtil.toString(date)
-					}]
-				};
+
+			let data =  {
+				"KPILEVEL1":[{
+					kpiCertKey:key,
+					ocrDttm:DateTimeUtil.toString(DateTimeUtil.minusDate(date,1)),
+					systmOprYn:"Y",
+					trsDttm:DateTimeUtil.toString(date)
+				}]
+			};
 				sendRequest('post',`${GlobalStore.kpi_domain}/kpiLv1/kpiLv1InsertTst`,data,'').then(res=>{
-					this.logger.info(`회사: ${id} ,msg : complete`);
+					// console.log(res);		
+					 this.logger.info(`회사: ${id}  ,msg : ${res.okMsg}`);
 				}).catch(err=>{
 					this.logger.error(`회사: ${id} ,msg : ${err.message}`);
 				})
-			}
 			
 			this.logger.info('Lv1');
 		}
 
-		levelTwo(){
+		async levelTwo(key:string,id:number){
 			this.logger.info('Lv2');
+			let data = {
+				"KPILEVEL2":[]
+			}
+			let oper = await this.getOperate(key,id);
+			let lot_prdct = await this.getLotPrdct(key,id); 
+			console.log(oper,lot_prdct);
 		}
 
 		levelThree(){
 			this.logger.info('Lv3');
+		}
+
+		async getOperate(key:string,id:number){
+			let res = await this.dbService.getOperate(id);
+			let average ;	
+			if(!res.work_time && !res.total_time){
+				average = 30;
+			}else{
+				console.log(Math.round((res.work_time/res.total_time)*100));
+
+			}
+			let levelTwo_data= {
+				kpiCertKey:key,
+				ocrDttm:'',
+				kpiFidCd:"P",
+				kpiDtlCd:"A",
+				kpiDtlNm:"가동률 증가",
+				achrt:'',
+				trsDttm:DateTimeUtil.toString()
+			}
+			return res;
+		}
+
+		async getLotPrdct(key:string,id:number) {
+			let res = await this.dbService.getLotPrdct(id);
+			console.log(Math.abs(res.diff_lot));
+			let Date = DateTimeUtil.now();
+			let levelTwo_data ={
+				kpiCertKey:key,
+				ocrDttm:DateTimeUtil.toString,
+				kpiFidCd:"D",
+				kpiDtlCd:"Z",
+				kpiDtlNm:"LOT완료예측시간오차율",
+				achrt:'',
+				trsDttm:DateTimeUtil.toString()
+			}
+			return res;
 		}
 
 	}

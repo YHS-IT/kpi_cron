@@ -4,10 +4,14 @@ import { BaroMachineStdwork } from 'src/entities/BaroMachineStdwork';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CronService } from './cron.service';
 import { DbJob } from './dbjob';
+import { BaroMachineReport } from 'src/entities/BaroMachineReport';
 
 @Module({
     imports:[
-        TypeOrmModule.forFeature([BaroMachineStdwork]),
+        TypeOrmModule.forFeature([
+            BaroMachineStdwork,
+            BaroMachineReport
+        ]),
         ScheduleModule.forRoot(),
     ],
     controllers: [],

@@ -16,7 +16,6 @@ export class CustomLogger extends AbstractLogger {
         GlobalStore.query_time = new Date();
         for (let message of messages) {
         
-            console.log(message);
             switch (message.type ?? level) {
                 case "log":
                 case "schema-build":
