@@ -5,6 +5,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { CronService } from './cron.service';
 import { DbJob } from './dbjob';
 import { BaroMachineReport } from 'src/entities/BaroMachineReport';
+import { CronController } from './cron.controller';
 
 @Module({
     imports:[
@@ -14,7 +15,7 @@ import { BaroMachineReport } from 'src/entities/BaroMachineReport';
         ]),
         ScheduleModule.forRoot(),
     ],
-    controllers: [],
+    controllers: [CronController],
     providers: [ CronService ,DbJob],
 
 })

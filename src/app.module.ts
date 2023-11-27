@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CustomLogger } from './lib/typeorm.customLogger';
 import { CronModule } from './cron/cron.module';
 import { Logger } from 'winston';
+import { CronController } from './cron/cron.controller';
 @Module({
   imports: [
     // winstonLogger
