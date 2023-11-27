@@ -12,12 +12,19 @@ export const winstonLogger = ()=> {
     }
 }
 
+
+const timezoned = () =>{
+    return new Date().toLocaleString('ko-KR',{
+        timeZone:'Asia/Seoul'
+    })
+}
+
 const getDevFormat = () => {
 
     return format.combine(
         format.label({label:'dev'}),
         format.timestamp({
-            format:'YYYY-MM-DD HH:mm:ss'
+            format:timezoned(),
         }),
         format.colorize(),
         format.ms(),

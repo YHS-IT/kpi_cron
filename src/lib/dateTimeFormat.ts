@@ -5,8 +5,10 @@ import {
     LocalDateTime,
     nativeJs,
     Period,
-  } from 'js-joda';
-  
+    ZoneId,
+} from 'js-joda';
+import 'js-joda-timezone';
+
   export class DateTimeUtil {
     private static DATE_FORMATTER = DateTimeFormatter.ofPattern('yyyy-MM-dd');
     private static DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
@@ -25,7 +27,7 @@ import {
     }
     
     static now(){
-        return LocalDateTime.now();
+        return LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 
 

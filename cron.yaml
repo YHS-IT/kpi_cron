@@ -1,0 +1,19 @@
+cron:
+
+- description : 'kpi level1'
+  url:  "/cron/levelOne"
+  schedule: every day 01:00
+  timezone: Asia/Seoul
+  target: nestkpi
+
+- description : 'kpi level2'
+  url:  "/cron/levelTwo"
+  schedule: every day 01:10
+  timezone: Asia/Seoul
+  target: nestkpi
+
+- description : 'kpi level3'
+  url:  "/cron/levelThree"
+  schedule: every day 01:20
+  timezone: Asia/Seoul
+  target: nestkpi
