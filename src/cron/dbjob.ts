@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { BaroMachineReport } from "src/entities/BaroMachineReport";
 import { BaroMachineStdwork } from "src/entities/BaroMachineStdwork";
+import { KpiLot } from "src/entities/KpiLot";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -10,10 +11,12 @@ export class DbJob{
         @InjectRepository(BaroMachineStdwork) 
         private baroMachineStdwork:Repository<BaroMachineStdwork>,
         @InjectRepository(BaroMachineReport)
-        private baroMachineReport:Repository<BaroMachineReport>    
+        private baroMachineReport:Repository<BaroMachineReport>,    
+        @InjectRepository(KpiLot)
+        private kpiLot:Repository<KpiLot>
     ){}
        
-    async getOperate(id){
+    async getOperate(id){   
         let query = await this.baroMachineStdwork
         .createQueryBuilder('stdwork')
         .select(['sum(if(work_time/total_time * 100 >=30, work_time,0 )) work_time','sum(if(work_time/total_time * 100 >=30, total_time,0 )) total_time'])
@@ -23,12 +26,18 @@ export class DbJob{
     }
 
     async getLotPrdct(id){
-        let query = await this.baroMachineReport
-        .createQueryBuilder('baro')
-        .select('round( avg( ( 1 - ( ( (avg_period * count + 3600)  )  / ( time_to_sec( timediff( end_time, start_time ) ) ) ) ) * 100 ) ) diff_lot')
-        .where('baro.ent_id = :id',{id})
-        .andWhere('baro.date = curdate() - interval 1 day')
-        .andWhere('baro.mkey not in(68,69,70,71,79)')
+        let query = await this.kpiLot
+        .createQueryBuilder('kpi')
+        .innerJoin('kpi.cnc','cnc')
+        .select('round(avg(lot_diff)) diff_lot')
+        .where('cnc.enterprise_id = :id', { id })
+        .andWhere('kpi.date = curdate() - interval 1 day');
+        // let query = await this.baroMachineReport
+        // .createQueryBuilder('baro')
+        // .select('round( avg( ( 1 - ( ( (avg_period * count + 3600)  )  / ( time_to_sec( timediff( end_time, start_time ) ) ) ) ) * 100 ) ) diff_lot')
+        // .where('baro.ent_id = :id',{id})
+        // .andWhere('baro.date = curdate() - interval 1 day')
+        // .andWhere('baro.mkey not in(68,69,70,71,79)')
         return query.getRawOne();
     }
 

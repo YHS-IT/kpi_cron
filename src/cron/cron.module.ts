@@ -6,12 +6,14 @@ import { CronService } from './cron.service';
 import { DbJob } from './dbjob';
 import { BaroMachineReport } from 'src/entities/BaroMachineReport';
 import { CronController } from './cron.controller';
+import { KpiLot } from 'src/entities/KpiLot';
 
 @Module({
     imports:[
         TypeOrmModule.forFeature([
             BaroMachineStdwork,
-            BaroMachineReport
+            BaroMachineReport,
+            KpiLot
         ]),
         ScheduleModule.forRoot(),
     ],

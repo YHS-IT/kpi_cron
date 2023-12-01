@@ -47,7 +47,6 @@ import { LocalDateTime } from "js-joda";
 
 		async levelTwo(){
 			let date = DateTimeUtil.now();
-			console.log(typeof date);
 			for await(let info of apiKey){
 				let {id,key,standard_oper,standard_lot} = info;		
 				let axios_data = { "KPILEVEL2":[] }	;		
@@ -55,7 +54,6 @@ import { LocalDateTime } from "js-joda";
 				if(oper_data){axios_data.KPILEVEL2.push(oper_data)};		
 				let lot_data = await this.getLotPrdct(id,key,date,standard_lot);		
 				if(lot_data){axios_data.KPILEVEL2.push(lot_data)};		
-		
 				let response = axios_data.KPILEVEL2.length ? await sendRequest('post',`${GlobalStore.kpi_domain}/kpiLv2/kpiLv2Insert`,axios_data,'') : 'NO data';	
 				console.log(response);
 			}
@@ -72,7 +70,6 @@ import { LocalDateTime } from "js-joda";
 				let lot_data = await this.getLotPrdct(id,key,date,standard_lot,'lv3');		
 				if(lot_data){axios_data.KPILEVEL3.push(lot_data)};
 				let response = axios_data.KPILEVEL3.length ? await sendRequest('post',`${GlobalStore.kpi_domain}/kpiLv3/kpiLv3Insert`,axios_data,'') : 'NO data';	
-				
 				console.log(response);
 			}
 
@@ -92,7 +89,6 @@ import { LocalDateTime } from "js-joda";
 
 		async getLotPrdct(id:number,key:string,date:LocalDateTime,standard_lot:number,level?:string){
 			let res = await this.dbService.getLotPrdct(id);
-
 			if(!res.diff_lot) return null;
 
 			let val =  Math.abs(res.diff_lot) ;

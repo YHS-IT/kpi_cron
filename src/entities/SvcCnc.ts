@@ -7,9 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { SvcEdge } from "./SvcEdge";
-import { SvcCncProgressMemo } from "./SvcCncProgressMemo";
-import { SvcMonitorItems } from "./SvcMonitorItems";
+import { KpiLot } from "./KpiLot";
 
 @Index("idx_ent", ["enterpriseId"], {})
 @Index("fk_edge_idx", ["edgeId"], {})
@@ -56,20 +54,6 @@ export class SvcCnc {
   @Column("varchar", { name: "comment", nullable: true, length: 225 })
   comment: string | null;
 
-
-  @ManyToOne(() => SvcEdge, (svcEdge) => svcEdge.svcCncs, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "edge_id", referencedColumnName: "id" }])
-  edge: SvcEdge;
-
-  @OneToMany(
-    () => SvcCncProgressMemo,
-    (svcCncProgressMemo) => svcCncProgressMemo.m
-  )
-  svcCncProgressMemos: SvcCncProgressMemo[];
-
-  @OneToMany(() => SvcMonitorItems, (svcMonitorItems) => svcMonitorItems.cnc)
-  svcMonitorItems: SvcMonitorItems[];
+  @OneToMany(() => KpiLot, (kpiLot) => kpiLot.mkey )
+  kpiLots: KpiLot[];
 }
